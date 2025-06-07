@@ -1,0 +1,57 @@
+body {
+  background-color: #4facfe; /* Cor de fallback */
+  background-image: linear-gradient(to bottom, #4facfe, #00f2fe);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif; /* Optional: for a consistent font */
+}
+
+/* Add these new CSS rules for the container box */
+.container {
+  background-color: #A090D0; /* Light purple, similar to the image */
+  padding: 40px 30px; /* Adjust padding as needed */
+  border-radius: 15px; /* Rounded corners */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Adds a subtle shadow */
+  width: 90%; /* Responsive width */
+  max-width: 450px; /* Maximum width of the box */
+  display: flex; /* Enables flexbox properties */
+  flex-direction: column; /* Stacks items vertically */
+  align-items: center; /* Centers items horizontally (logo, h1, button) */
+}
+
+/* Add these new CSS rules for the logo image */
+.container img[src*="logo.png"] {
+  width: 130px; /* Adjust size as needed */
+  height: 130px; /* Adjust size as needed */
+  border-radius: 50%; /* Makes the image circular, assuming it's square */
+  object-fit: cover; /* Ensures the image covers the area nicely */
+  margin-bottom: 20px; /* Space below the logo */
+  background-color: white; /* White background for the logo circle, as in the image */
+}
+
+/* Modify your existing .container h1 rule like this: */
+.container h1 {
+  color: white;
+  font-size: 32px; /* Adjusted font size to better match the image */
+  margin-top: 0; /* Remove any default top margin */
+  margin-bottom: 30px; /* Space below the heading */
+  text-align: center; /* Ensures heading text is centered */
+}
+
+/* Add these new CSS rules for the Amazon button link and image */
+.container a {
+  display: block; /* Makes the link a block element */
+  width: 100%; /* Allows setting max-width effectively */
+  max-width: 300px; /* Max width for the button */
+  margin-top: 10px; /* Space above the button */
+}
+
+.container a img[src*="amazon.jpg"] {
+  width: 100%; /* Makes the image responsive within its 'a' tag */
+  height: auto; /* Maintains aspect ratio */
+  border-radius: 8px; /* Rounded corners for the button image */
+  display: block; /* Removes extra space below the image if it's inline */
+}
