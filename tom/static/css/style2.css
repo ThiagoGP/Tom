@@ -1,0 +1,303 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #6574B4;
+    color: black;
+}
+
+.container-cima {
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Adjusts spacing between logo/welcome and nav */
+}
+
+.container-cima svg {
+    margin-right: 10px; /* Adds some space next to the icon */
+}
+
+.container-cima nav a {
+    margin-left: 15px; /* Space between nav items */
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover */
+}
+
+.container-cima nav a:hover {
+    color: #6574B4; /* Change color on hover */
+    transform: translateY(-2px); /* Simple lift animation on hover */
+}
+
+/* Optional: to group the icon and welcome message together */
+.container-cima > svg,
+.container-cima > span {
+    display: inline-block; /* Keeps them on the same line */
+    vertical-align: middle; /* Aligns them nicely */
+}
+
+.container-cima > br {
+    display: none; /* Removes the line break if you want "Seja BEM-VINDO," and "XXXXXX" on the same line or manage layout with flex */
+}
+
+/* If you want "Seja BEM-VINDO," and "XXXXXX" stacked but aligned with icon */
+.welcome-user {
+    display: flex;
+    align-items: center;
+}
+
+.welcome-user svg {
+    border: 2px solid #6574B4; /* Cor da borda do círculo, usando a cor do seu tema */
+    border-radius: 50%;      /* Isso torna a borda circular */
+    padding: 6px;             /* Espaçamento entre o ícone e a borda do círculo */
+                               /* O ícone SVG tem 16x16px. Com padding e borda, o diâmetro total será aprox. 32px */
+                               /* (16px do ícone + 2*6px de padding + 2*2px de borda = 32px) */
+    margin-right: 10px;       /* Mantém o espaço entre o círculo do ícone e o texto */
+    fill: #6574B4;            /* Define a cor do ícone para combinar com a borda e o tema */
+    box-sizing: content-box;  /* Garante que o padding seja adicionado fora das dimensões do ícone */
+}
+
+.welcome-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px; /* Space between icon and text */
+}
+
+/* Styles for the intro section */
+.intro {
+    background-color: #6574B4; /* Purplish-blue background from image */
+    display: flex;
+    align-items: center; /* Vertically align logo and text */
+    justify-content: center; /* Center the group of logo and text */
+    padding: 50px 20px; /* Adjust padding as needed */
+    gap: 30px; /* Space between the logo and the text block */
+}
+
+.intro-logo-container img {
+    width: 400; /* Aumentado de 120px para um pouco mais de destaque */
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease; /* Adicionado para o efeito de hover */
+}
+
+.intro-logo-container img:hover {
+    transform: scale(1.05); /* Efeito de leve zoom ao passar o mouse */
+}
+
+.intro-text-container h1 {
+    font-family: 'Poppins', sans-serif;
+    color: #F0B90B; /* Gold/yellow color for the text */
+    font-size: 5.2em; /* Adjust for visual match with image */
+    font-weight: 700; /* Bold */
+    line-height: 1.25;
+    text-transform: uppercase;
+    margin: 0; /* Remove default h1 margins */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); /* Sombra sutil para o texto */
+}
+
+/* If you couldn't remove the h2 from HTML, this will hide it */
+.intro h2 {
+    display: none;
+}
+
+/* Styles for the routines grid and cards */
+.routines-grid {
+    background-color: #FFDD00; /* Yellow background */
+    padding-top: 20px;    /* Padding for the yellow area */
+    padding-bottom: 20px; /* Padding for the yellow area */
+    text-align: center; /* Center the h1 */
+}
+
+.routines-grid h1 {
+    color: white;
+    font-size: 2.5em; /* Adjust size as needed */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+/* New inner container for the actual grid of cards */
+.card-grid-inner-container {
+    display: grid;
+    gap: 24px; 
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    max-width: 1192px; 
+    margin-left: auto;
+    margin-right: auto;
+    /* Add horizontal padding if you want space between the content edge and viewport edge 
+       when the viewport is narrower than max-width */
+    padding-left: 20px; 
+    padding-right: 20px;
+}
+
+.card {
+    background-color: white; /* White background for cards */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* Increased min-height for taller cards */
+    min-height: 330px; /* Increased from 280px */
+}
+
+.card img {
+    width: 200px;  /* Define uma largura fixa para a imagem */
+    height: 200px; /* Define uma altura fixa para a imagem */
+    object-fit: contain; /* Faz com que a imagem inteira apareça, podendo deixar espaços vazios. */
+    margin-bottom: 15px;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 100%;
+    flex-grow: 1; /* Permite que esta div expanda e ocupe o espaço vertical restante no card */
+}
+
+.btn-register {
+    background-color: #28a745; /* Cor verde para o botão */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    margin-top: auto; /* Empurra o botão para a parte inferior do .card-content */
+}
+
+.btn-register:hover {
+    background-color: #218838; /* Um verde mais escuro para o estado hover */
+}
+
+.card.configured .routine-name {
+    font-weight: bold;
+    margin-bottom: 10px; /* Espaço entre o nome da rotina e as ações */
+    color: #333;
+}
+
+.actions {
+    margin-top: auto; /* Empurra a div de ações para a parte inferior do .card-content */
+    /* Assegura que o conteúdo dentro de .actions (como o botão de lixeira) também seja centralizado se necessário */
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+}
+
+.btn-action.btn-delete {
+    background-color: #FF4136; /* Red background for delete button */
+    border: none;
+    border-radius: 5px; /* Rounded corners for the "cardizinho" effect */
+    padding: 8px; /* Padding around the icon */
+    cursor: pointer;
+    display: inline-flex; /* Helps center the SVG */
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-action.btn-delete:hover {
+    background-color: #E00000; /* Darker red on hover */
+}
+
+.btn-action.btn-delete svg {
+    fill: white; /* White color for the trash icon */
+    width: 16px;
+    height: 16px;
+}
+
+/* Modal Styles */
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+#modal-overlay.hidden {
+    opacity: 0;
+    pointer-events: none; /* Makes the overlay non-interactive when hidden */
+}
+
+#modal {
+    background: white; /* Replaced var(--card-bg) */
+    padding: 2rem;
+    border-radius: 8px; /* Replaced var(--border-radius) */
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Optional: adds some depth */
+}
+
+#modal h2 {
+    margin-top: 0;
+    color: #333; /* Darker text for heading */
+}
+
+#modal #modal-gesture-img {
+    width: 120px;
+    height: 120px;
+    margin: 1rem 0;
+    object-fit: contain; /* Ensures the image is fully visible */
+}
+
+#modal input[type="text"] {
+    width: calc(100% - 2rem); /* Accounts for padding of the input itself */
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+}
+
+#modal #btn-create-routine {
+    background-color: #28a745; /* Replaced var(--primary-green) with existing green */
+    color: white; /* Replaced var(--text-light) */
+    border: none;
+    padding: 0.8rem 1.5rem;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+#modal #btn-create-routine:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+#modal #btn-cancel-modal {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    width: 100%;
+    padding: 0.5rem;
+    text-decoration: underline; /* Makes it look more like a link */
+}
+
+#modal #btn-cancel-modal:hover {
+    color: #555; /* Darker grey on hover */
+}
+
+#modal .info-text {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 1rem;
+}

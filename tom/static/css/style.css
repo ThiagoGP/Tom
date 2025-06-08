@@ -49,7 +49,7 @@ body {
   margin-top: 10px; /* Space above the button */
 }
 
-.container a img[src*="amazon.jpg"] {
+#LoginWithAmazon{
   width: 100%; /* Makes the image responsive within its 'a' tag */
   height: auto; /* Maintains aspect ratio */
   border-radius: 8px; /* Rounded corners for the button image */

@@ -1,0 +1,180 @@
+{% load static %}
+{% load dict_extras %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tom Gestos</title>
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+</head>
+
+<body>
+    <div class="container-cima">
+        <div class="welcome-user">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+            </svg>
+            <div class="welcome-text">
+                <span>Seja BEM-VINDO,</span>
+                <span id="usuario"> {{ nome }}</span> <!-- Changed div="usuario" to id="usuario" for better practice -->
+            </div>
+        </div>
+
+        <nav>
+            <a href="#">HOME</a>
+            <a href="#">SUPORTE</a>
+            <a href="{% url 'logout' %}">SAIR</a>
+
+        </nav>
+    </div>
+
+    <section class="intro">
+        <div class="intro-logo-container">
+            <img src="{% static 'images/tom.png' %}" alt="TOM Logo">
+        </div>
+        <div class="intro-text-container">
+            <h1>TRANSFORME<br>GESTOS EM AÇÃO</h1>
+        </div>
+    </section>
+    <section class="routines-grid">
+        <h1> MINHAS ROTINAS DE GESTOS</h1>
+      {% comment %} Lista de todos os gestos suportados {% endcomment %}
+
+{% for gesto in lista_gestos %}
+    {% if gestos_registrados|get_item:gesto %}
+        <!-- Gesto configurado -->
+        <div class="card configured" data-gesture-name="{{ gesto }}">
+            <img src="{% static 'images/gesto-'|add:gesto|add:'.png' %}" alt="Gesto {{ gesto }}">
+            <div class="card-content">
+                <p class="routine-name">{{ gestos_registrados|get_item:gesto }}</p>
+                <div class="actions">
+                    <button class="btn-action btn-delete">
+                        <!-- Ícone SVG -->
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Gesto ainda não configurado -->
+        <div class="card" data-gesture-name="{{ gesto }}">
+            <img src="{% static 'images/gesto-'|add:gesto|add:'.png' %}" alt="Gesto {{ gesto }}">
+            <div class="card-content">
+                <button class="btn-register">CADASTRAR</button>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+
+
+
+    </section>
+
+    <div id="modal-overlay" class="hidden">
+        <div id="modal">
+            <h2>Dê um nome ao seu Gesto</h2>
+            <img id="modal-gesture-img" src="" alt="Gesto selecionado">
+            <input type="text" id="routine-name-input" placeholder="Ex: Ligar Luz da Sala">
+            <button id="btn-create-routine">Criar</button>
+            <button id="btn-cancel-modal">Cancelar</button>
+            <div class="info-text">
+                <p>ℹ️ Após criar, a rotina precisará ser configurada no seu aplicativo Alexa.</p>
+            </div>
+        </div>
+    </div>
+ <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalGestureImg = document.getElementById('modal-gesture-img');
+        const routineNameInput = document.getElementById('routine-name-input');
+        const createRoutineBtn = document.getElementById('btn-create-routine');
+        const cancelModalBtn = document.getElementById('btn-cancel-modal');
+
+        let activeCard = null;
+
+        document.querySelectorAll('.btn-register').forEach(button => {
+            button.addEventListener('click', (event) => {
+                activeCard = event.target.closest('.card');
+                openModal();
+            });
+        });
+
+        function openModal() {
+            if (!activeCard) return;
+            modalGestureImg.src = activeCard.querySelector('img').src;
+            routineNameInput.value = '';
+            modalOverlay.classList.remove('hidden');
+            routineNameInput.focus();
+        }
+
+        function closeModal() {
+            modalOverlay.classList.add('hidden');
+            activeCard = null;
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let cookie of cookies) {
+                    const trimmed = cookie.trim();
+                    if (trimmed.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(trimmed.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function createRoutine() {
+            const newName = routineNameInput.value.trim();
+            const gestureName = activeCard.getAttribute('data-gesture-name');
+
+            if (newName === '' || !activeCard) {
+                alert('Por favor, digite um nome para a rotina.');
+                return;
+            }
+
+            fetch("/registrar-gesto/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    gesture: gestureName,
+                    name: newName
+                })
+            }).then(res => {
+                if (res.ok) {
+                    alert("Rotina registrada com sucesso!");
+                    location.reload();
+                } else {
+                    alert("Erro ao registrar rotina.");
+                }
+            });
+        }
+
+        createRoutineBtn.addEventListener('click', createRoutine);
+        cancelModalBtn.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', (event) => {
+            if (event.target === modalOverlay) {
+                closeModal();
+            }
+        });
+        routineNameInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                createRoutine();
+            }
+        });
+    });
+</script>
+
+</body>
+
+</html>

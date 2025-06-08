@@ -2,20 +2,43 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Document</title>
 </head>
+
 <body>
-    
+
     <div class="container">
         <img src="{% static 'images/logo.png' %}">
         <h1>Sua Voz em Gesto</h1>
-        <a href="https:xxxx.com">
-            <img src="{% static 'images/amazon.jpg' %}" alt="Seta para baixo">
-        </a>
+        <a href="https://www.amazon.com/ap/oa?client_id=amzn1.application-oa2-client.6f2e687eedb6492d92ef0ee9c7489e89&scope=profile&response_type=code&redirect_uri=http://127.0.0.1:8000/callback">
+    <img 
+    src="https://m.media-amazon.com/images/G/01/lwa/btnLWA_gold_312x64.png" 
+    width="312" 
+    height="64" 
+    alt="Login com Amazon">
+</a>
+
     </div>
+
+    <script type="text/javascript">
+
+        document.getElementById('LoginWithAmazon').onclick = function () {
+            var options = {
+                scope: 'profile',
+                response_type: 'code'
+            };
+
+            // Passe a URL de redirecionamento como o segundo argumento.
+            amazon.Login.authorize(options, 'http://127.0.0.1:8000/login/');
+
+            return false;
+        };
+    </script>
 </body>
+
 </html>
