@@ -20,16 +20,17 @@
             </svg>
             <div class="welcome-text">
                 <span>Seja BEM-VINDO,</span>
-                <span id="usuario"> {{ nome }}</span> <!-- Changed div="usuario" to id="usuario" for better practice -->
+                <span id="usuario"> {{ nome }}</span>
             </div>
         </div>
 
         <nav>
-            <a href="#">HOME</a>
+            <a href="{% url 'dashboard' %}">HOME</a>
             <a href="#">SUPORTE</a>
             <a href="{% url 'logout' %}">SAIR</a>
 
         </nav>
+
     </div>
 
     <section class="intro">
@@ -40,38 +41,56 @@
             <h1>TRANSFORME<br>GESTOS EM AÇÃO</h1>
         </div>
     </section>
+
+    {%if checked %}
     <section class="routines-grid">
         <h1> MINHAS ROTINAS DE GESTOS</h1>
-      {% comment %} Lista de todos os gestos suportados {% endcomment %}
+        <div class="card-grid-inner-container">
+            {% comment %} Lista de todos os gestos suportados {% endcomment %}
 
-{% for gesto in lista_gestos %}
-    {% if gestos_registrados|get_item:gesto %}
-        <!-- Gesto configurado -->
-        <div class="card configured" data-gesture-name="{{ gesto }}">
-            <img src="{% static 'images/gesto-'|add:gesto|add:'.png' %}" alt="Gesto {{ gesto }}">
-            <div class="card-content">
-                <p class="routine-name">{{ gestos_registrados|get_item:gesto }}</p>
-                <div class="actions">
-                    <button class="btn-action btn-delete">
-                        <!-- Ícone SVG -->
-                    </button>
+            {% for gesto in lista_gestos %}
+            {% if gestos_registrados|get_item:gesto %}
+
+            <div class="card configured" data-gesture-name="{{ gesto }}">
+                <img src="{% static 'images/gesto-'|add:gesto|add:'.png' %}" alt="Gesto {{ gesto }}">
+                <div class="card-content">
+                    <p class="routine-name">{{ gestos_registrados|get_item:gesto }}</p>
+                    <div class="actions">
+                        <button class="btn-action btn-delete">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                <path
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    {% else %}
-        <!-- Gesto ainda não configurado -->
-        <div class="card" data-gesture-name="{{ gesto }}">
-            <img src="{% static 'images/gesto-'|add:gesto|add:'.png' %}" alt="Gesto {{ gesto }}">
-            <div class="card-content">
-                <button class="btn-register">CADASTRAR</button>
+            {% else %}
+            <!-- Gesto ainda não configurado -->
+            <div class="card" data-gesture-name="{{ gesto }}">
+                <img src="{% static 'images/gesto-'|add:gesto|add:'.png' %}" alt="Gesto {{ gesto }}">
+                <div class="card-content">
+                    <button class="btn-register">CADASTRAR</button>
+                </div>
             </div>
+            {% endif %}
+            {% endfor %}
         </div>
-    {% endif %}
-{% endfor %}
-
 
 
     </section>
+
+    {% else %}
+    <section class="routines-grid">
+        <h1>VOCÊ AINDA NÃO ATIVOU A HABILIDADE NA AMAZON</h1>
+        <img src="{% static 'images/atencao.png' %}" alt="atenção">
+
+    </section>
+
+    {% endif %}
 
     <div id="modal-overlay" class="hidden">
         <div id="modal">
@@ -85,95 +104,125 @@
             </div>
         </div>
     </div>
- <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
 
-        const modalOverlay = document.getElementById('modal-overlay');
-        const modalGestureImg = document.getElementById('modal-gesture-img');
-        const routineNameInput = document.getElementById('routine-name-input');
-        const createRoutineBtn = document.getElementById('btn-create-routine');
-        const cancelModalBtn = document.getElementById('btn-cancel-modal');
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalGestureImg = document.getElementById('modal-gesture-img');
+            const routineNameInput = document.getElementById('routine-name-input');
+            const createRoutineBtn = document.getElementById('btn-create-routine');
+            const cancelModalBtn = document.getElementById('btn-cancel-modal');
 
-        let activeCard = null;
 
-        document.querySelectorAll('.btn-register').forEach(button => {
-            button.addEventListener('click', (event) => {
-                activeCard = event.target.closest('.card');
-                openModal();
+            let activeCard = null;
+
+            document.querySelectorAll('.btn-register').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    activeCard = event.target.closest('.card');
+                    openModal();
+                });
             });
-        });
+            document.querySelectorAll('.btn-delete').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    activeCard = event.target.closest('.card');
+                    if (confirm("Tem certeza que deseja excluir esta rotina?")) {
+                        deleteRoutine();
+                    }
+                });
+            });
+            function openModal() {
+                if (!activeCard) return;
+                modalGestureImg.src = activeCard.querySelector('img').src;
+                routineNameInput.value = '';
+                modalOverlay.classList.remove('hidden');
+                routineNameInput.focus();
+            }
 
-        function openModal() {
-            if (!activeCard) return;
-            modalGestureImg.src = activeCard.querySelector('img').src;
-            routineNameInput.value = '';
-            modalOverlay.classList.remove('hidden');
-            routineNameInput.focus();
-        }
+            function closeModal() {
+                modalOverlay.classList.add('hidden');
+                activeCard = null;
+            }
 
-        function closeModal() {
-            modalOverlay.classList.add('hidden');
-            activeCard = null;
-        }
-
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let cookie of cookies) {
-                    const trimmed = cookie.trim();
-                    if (trimmed.startsWith(name + '=')) {
-                        cookieValue = decodeURIComponent(trimmed.substring(name.length + 1));
-                        break;
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let cookie of cookies) {
+                        const trimmed = cookie.trim();
+                        if (trimmed.startsWith(name + '=')) {
+                            cookieValue = decodeURIComponent(trimmed.substring(name.length + 1));
+                            break;
+                        }
                     }
                 }
-            }
-            return cookieValue;
-        }
-
-        function createRoutine() {
-            const newName = routineNameInput.value.trim();
-            const gestureName = activeCard.getAttribute('data-gesture-name');
-
-            if (newName === '' || !activeCard) {
-                alert('Por favor, digite um nome para a rotina.');
-                return;
+                return cookieValue;
             }
 
-            fetch("/registrar-gesto/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": getCookie('csrftoken')
-                },
-                body: JSON.stringify({
-                    gesture: gestureName,
-                    name: newName
-                })
-            }).then(res => {
-                if (res.ok) {
-                    alert("Rotina registrada com sucesso!");
-                    location.reload();
-                } else {
-                    alert("Erro ao registrar rotina.");
+            function createRoutine() {
+                const newName = routineNameInput.value.trim();
+                const gestureName = activeCard.getAttribute('data-gesture-name');
+
+                if (newName === '' || !activeCard) {
+                    alert('Por favor, digite um nome para a rotina.');
+                    return;
+                }
+
+                fetch("/registrar-gesto/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        gesture: gestureName,
+                        name: newName
+                    })
+                }).then(res => {
+                    if (res.ok) {
+                        alert("Rotina registrada com sucesso!");
+                        location.reload();
+                    } else {
+                        alert("Erro ao registrar rotina.");
+                    }
+                });
+            }
+
+            function deleteRoutine() {
+                const gestureName = activeCard.getAttribute('data-gesture-name');
+
+                fetch("/deletar-gesto/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        gesture: gestureName
+                    })
+                }).then(res => {
+                    if (res.ok) {
+                        alert("Rotina deletada com sucesso!");
+                        location.reload();
+                    } else {
+                        alert("Erro ao deletar rotina.");
+                    }
+                });
+            }
+
+            createRoutineBtn.addEventListener('click', createRoutine);
+            cancelModalBtn.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', (event) => {
+                if (event.target === modalOverlay) {
+                    closeModal();
                 }
             });
-        }
-
-        createRoutineBtn.addEventListener('click', createRoutine);
-        cancelModalBtn.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (event) => {
-            if (event.target === modalOverlay) {
-                closeModal();
-            }
+            routineNameInput.addEventListener('keyup', (event) => {
+                if (event.key === 'Enter') {
+                    createRoutine();
+                }
+            });
         });
-        routineNameInput.addEventListener('keyup', (event) => {
-            if (event.key === 'Enter') {
-                createRoutine();
-            }
-        });
-    });
-</script>
+    </script>
 
 </body>
 

@@ -12,8 +12,10 @@ urlpatterns = [
     path('callback/', auth_views.amazon_callback, name='amazon_callback'),
     path('home/', dashboard_views.home,  name='dashboard'),
     path('logout/', dashboard_views.logout_view, name='logout'),
-    path('registrar-gesto/', dashboard_views.RegistrarGestoView.as_view(), name='registrar_gesto')
-    
+    path('registrar-gesto/', dashboard_views.RegistrarGestoView.as_view(), name='registrar_gesto'),
+    path('deletar-gesto/', dashboard_views.deletarGesto.as_view(), name='deletar_gesto'),
+    path('', auth_views.principal, name='principal'),
+    path('api/get-config/', dashboard_views.get_gestos_por_usuario, name='get_config'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

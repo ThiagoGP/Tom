@@ -1,57 +1,53 @@
 body {
-  background-color: #4facfe; /* Cor de fallback */
+  background-color: #4facfe; 
   background-image: linear-gradient(to bottom, #4facfe, #00f2fe);
   min-height: 100vh;
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Arial, sans-serif; /* Optional: for a consistent font */
+  font-family: Arial, sans-serif; 
 }
 
-/* Add these new CSS rules for the container box */
 .container {
-  background-color: #A090D0; /* Light purple, similar to the image */
-  padding: 40px 30px; /* Adjust padding as needed */
-  border-radius: 15px; /* Rounded corners */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Adds a subtle shadow */
-  width: 90%; /* Responsive width */
-  max-width: 450px; /* Maximum width of the box */
-  display: flex; /* Enables flexbox properties */
-  flex-direction: column; /* Stacks items vertically */
-  align-items: center; /* Centers items horizontally (logo, h1, button) */
+  background-color: #A090D0; 
+  padding: 40px 30px; 
+  border-radius: 15px; 
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); 
+  width: 90%; 
+  max-width: 450px; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
 }
 
-/* Add these new CSS rules for the logo image */
 .container img[src*="logo.png"] {
-  width: 130px; /* Adjust size as needed */
-  height: 130px; /* Adjust size as needed */
-  border-radius: 50%; /* Makes the image circular, assuming it's square */
-  object-fit: cover; /* Ensures the image covers the area nicely */
-  margin-bottom: 20px; /* Space below the logo */
-  background-color: white; /* White background for the logo circle, as in the image */
+  width: 130px; 
+  height: 130px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+  margin-bottom: 20px; 
+  background-color: white; 
 }
 
-/* Modify your existing .container h1 rule like this: */
 .container h1 {
   color: white;
-  font-size: 32px; /* Adjusted font size to better match the image */
-  margin-top: 0; /* Remove any default top margin */
-  margin-bottom: 30px; /* Space below the heading */
-  text-align: center; /* Ensures heading text is centered */
+  font-size: 32px; 
+  margin-top: 0; 
+  margin-bottom: 30px; 
+  text-align: center; 
 }
 
-/* Add these new CSS rules for the Amazon button link and image */
 .container a {
-  display: block; /* Makes the link a block element */
-  width: 100%; /* Allows setting max-width effectively */
-  max-width: 300px; /* Max width for the button */
-  margin-top: 10px; /* Space above the button */
+  display: block; 
+  width: 100%; 
+  max-width: 300px; 
+  margin-top: 10px; 
 }
 
 #LoginWithAmazon{
-  width: 100%; /* Makes the image responsive within its 'a' tag */
-  height: auto; /* Maintains aspect ratio */
-  border-radius: 8px; /* Rounded corners for the button image */
-  display: block; /* Removes extra space below the image if it's inline */
+  width: 100%; 
+  height: auto; 
+  border-radius: 8px; 
+  display: block; 
 }
