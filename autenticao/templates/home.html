@@ -7,7 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <title>Document</title>
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+    <title>Login</title>
 </head>
 
 <body>
@@ -15,15 +16,24 @@
     <div class="container">
         <img src="{% static 'images/logo.png' %}">
         <h1>Sua Voz em Gesto</h1>
-        <a href="https://www.amazon.com/ap/oa?client_id=amzn1.application-oa2-client.6f2e687eedb6492d92ef0ee9c7489e89&scope=profile&response_type=code&redirect_uri=/callback">
-    <img 
-    src="https://m.media-amazon.com/images/G/01/lwa/btnLWA_gold_312x64.png" 
-    width="312" 
-    height="64" 
-    alt="Login com Amazon">
-</a>
+        <a
+            href="https://www.amazon.com/ap/oa?client_id=&scope=profile&response_type=code&redirect_uri=">
+            <img src="https://m.media-amazon.com/images/G/01/lwa/btnLWA_gold_312x64.png" width="312" height="64"
+                alt="Login com Amazon">
+        </a>
 
     </div>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 
     <script type="text/javascript">
 

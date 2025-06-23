@@ -7,6 +7,7 @@ body {
     background-color: #6574B4;
     color: black;
 }
+/* */
 
 .container-cima {
     background-color: white;
@@ -297,3 +298,11 @@ body {
     color: #666;
     margin-top: 1rem;
 }
+
+.rodape {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+

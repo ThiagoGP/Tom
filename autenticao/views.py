@@ -5,9 +5,9 @@ from django.contrib.auth import login
 from django.http import HttpResponse
 from .models import Conta
 
+def principal(request):
+    return render(request, 'index.html')
 
-def principal(requests):
-    return redirect('login')
 def home(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
@@ -25,9 +25,9 @@ def amazon_callback(request):
     payload = {
         'grant_type': 'authorization_code',
         'code': code,
-        'redirect_uri': '/callback',
-        'client_id': 'amzn1.application-oa2-client.6f2e687eedb6492d92ef0ee9c7489e89',
-        'client_secret': 'amzn1.oa2-cs.v1.6141d148d3c2823f5db00c4b5bb5cc401d3f1d35cc422ef9f96c227e41160bc4' # COLOQUE SEU SECRET AQUI
+        'redirect_uri': '',
+        'client_id': '',
+        'client_secret': '' # COLOQUE SEU SECRET AQUI
     }
     
     response = requests.post(token_url, data=payload)
