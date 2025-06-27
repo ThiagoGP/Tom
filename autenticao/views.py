@@ -4,6 +4,21 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.http import HttpResponse
 from .models import Conta
+from dotenv import load_dotenv
+from urllib.parse import urlencode
+import os
+
+
+load_dotenv() 
+base_url = os.getenv("AMAZON_AUTH_URL")
+params = {
+    "client_id": os.getenv("AMAZON_CLIENT_ID"),
+    "scope": os.getenv("AMAZON_SCOPE"),
+    "response_type": "code",
+    "redirect_uri": os.getenv("AMAZON_REDIRECT_URI")
+}
+auth_url = f"{base_url}?{urlencode(params)}"
+
 
 def principal(request):
     return render(request, 'index.html')
@@ -11,7 +26,7 @@ def principal(request):
 def home(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
-    return render(request, 'home.html')
+    return render(request, "home.html", {"auth_url": auth_url})
 
 
 def amazon_callback(request):
@@ -25,9 +40,9 @@ def amazon_callback(request):
     payload = {
         'grant_type': 'authorization_code',
         'code': code,
-        'redirect_uri': '',
-        'client_id': '',
-        'client_secret': '' # COLOQUE SEU SECRET AQUI
+        'redirect_uri': os.getenv("AMAZON_REDIRECT_URI"),
+        'client_id': os.getenv("AMAZON_CLIENT_ID"),
+        'client_secret': os.getenv("AMAZON_CLIENT_SECRET_ID")
     }
     
     response = requests.post(token_url, data=payload)

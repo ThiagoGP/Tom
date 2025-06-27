@@ -56,10 +56,13 @@ def home(request):
 
     return render(request, 'home2.html', context)
     
+
+def notFound(request):
+    return render(request, '404.html', status=404)
 def logout_view(request):
     
     logout(request)
-    return redirect('login')
+    return redirect('principal')
 
 
 class RegistrarGestoView(View):

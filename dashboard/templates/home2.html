@@ -28,7 +28,7 @@
 
         <nav>
             <a href="{% url 'dashboard' %}">HOME</a>
-            <a href="#">SUPORTE</a>
+            <!-- <a href="#">SUPORTE</a> -->
             <a href="{% url 'logout' %}">SAIR</a>
 
         </nav>
@@ -39,7 +39,7 @@
 
     {%if checked %}
     <section class="routines-grid">
-        <h1> GESTOS CONFIGURADOS</h1>
+        <h1> Seus Gestos Configurados</h1>
         <div class="card-grid-inner-container">
             {% comment %} Lista de todos os gestos suportados {% endcomment %}
 
@@ -79,9 +79,9 @@
     </section>
 
     {% else %}
-    <section class="routines-grid">
+    <section class="rotinas">
         <h1>VOCÊ AINDA NÃO ATIVOU A HABILIDADE NA AMAZON</h1>
-        <img src="{% static 'images/atencao.png' %}" alt="atenção">
+        <img class="naoAtivada" src="{% static 'images/atencao.png' %}" alt="atenção">
 
     </section>
 
@@ -89,18 +89,19 @@
 
     <div id="modal-overlay" class="hidden">
         <div id="modal">
-            <h2>Dê um nome ao seu Gesto</h2>
+            <h2>Nomeie este gesto</h2>
             <img id="modal-gesture-img" src="" alt="Gesto selecionado">
             <input type="text" id="routine-name-input" placeholder="Ex: Ligar Luz da Sala">
             <button id="btn-create-routine">Criar</button>
             <button id="btn-cancel-modal">Cancelar</button>
             <div class="info-text">
-                <p>ℹ️ Após criar, a rotina precisará ser configurada no seu aplicativo Alexa.</p>
+                <p>ℹ️ Após criar, você precisará configurar a rotina no seu aplicativo Alexa.</p>
             </div>
         </div>
     </div>
 
     <footer class="rodape">
+        <h3>Nos acompanhe no Instagram</h3><br>
         <a href="https://www.instagram.com/tom_gestures">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-instagram"
             viewBox="0 0 16 16">

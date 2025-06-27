@@ -3,8 +3,13 @@ from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 from autenticao import views as auth_views
+from django.conf.urls import handler404
+from django.shortcuts import render
 
 from dashboard import views as dashboard_views
+
+def custom_404_view(request, exception):
+    return render(request, '404.html', status=404)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,6 +22,7 @@ urlpatterns = [
     path('', auth_views.principal, name='principal'),
     path('api/get-config/', dashboard_views.get_gestos_por_usuario, name='get_config'),
 ]
+handler404 = custom_404_view
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
